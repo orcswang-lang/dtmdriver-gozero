@@ -1,4 +1,4 @@
-module github.com/dtm-labs/dtmdriver-gozero
+module github.com/orcswang-lang/dtmdriver-gozero
 
 go 1.15
 
