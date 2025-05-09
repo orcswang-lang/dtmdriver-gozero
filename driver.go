@@ -99,6 +99,29 @@ func (z *zeroDriver) RegisterService(target string, endpoint string) error {
 			NotLoadCacheAtStart: notLoadCacheAtStart,
 			LogLevel:            logLevel,
 		}
+
+		if query.Get("accessKey") != "" && query.Get("secretKey") != "" && query.Get("regionId") != "" {
+			cc.AccessKey = query.Get("accessKey")
+			cc.SecretKey = query.Get("secretKey")
+			cc.RegionId = query.Get("regionId")
+		}
+
+		if query.Get("user") != "" && query.Get("password") != "" {
+			cc.Username = query.Get("user")
+			cc.Password = query.Get("password")
+		}
+
+		if query.Get("cacheDir") != "" {
+			cc.CacheDir = query.Get("cacheDir")
+		}
+		if query.Get("logDir") != "" {
+			cc.LogDir = query.Get("logDir")
+		}
+		if query.Get("UpdateCacheWhenEmpty") != "" {
+			updateCacheWhenEmpty, _ := strconv.ParseBool(query.Get("updateCacheWhenEmpty"))
+			cc.UpdateCacheWhenEmpty = updateCacheWhenEmpty
+		}
+
 		opts := nacos.NewNacosConfig(strings.TrimPrefix(u.Path, "/"), endpoint, sc, cc)
 		return nacos.RegisterService(opts)
 	default:
